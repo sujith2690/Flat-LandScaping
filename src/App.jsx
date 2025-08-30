@@ -1,10 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Loading from './pages/Loading'; 
+import Loading from './pages/Loading';
 import 'react-tooltip/dist/react-tooltip.css'
 
 const HomePage = lazy(() => import('./pages/Home'));
 const FloorPage = lazy(() => import('./pages/Floor'));
+const FlatPage = lazy(() => import('./pages/Flat'));
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/floor/:id" element={<FloorPage />} />
+          <Route path="/floor/:id/:id" element={<FlatPage />} />
           <Route path="/loading" element={<Loading />} />
         </Routes>
       </Suspense>
