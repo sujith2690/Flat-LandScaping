@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import flat from '../assets/image/3bhk aprt top.jpg'
 import { Tooltip } from "react-tooltip";
 
-const FlatContent = ({setUnitName}) => {
+const FlatContent = ({ setUnitName }) => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams(); // this will capture "4" from /floor/4
     console.log(id, '-----number')
     const handleRoute = (unitId) => {
@@ -146,11 +147,19 @@ const FlatContent = ({setUnitName}) => {
 
     return (
         <div className="relative w-full max-w-6xl mx-auto">
+            {isLoading && (
+                <div className="text-center h-full">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid mx-auto mb-4"></div>
+                    <p className="text-lg text-gray-700 font-medium">Loading, please wait...</p>
+                </div>
+            )}
             {/* Floor Plan Image */}
             <img
                 src={flat}
                 alt="Floor Plan"
                 className="w-full h-auto object-contain rounded"
+                loading="lazy"
+                onLoad={() => setIsLoading(false)}
             />
 
             {/* Overlays */}

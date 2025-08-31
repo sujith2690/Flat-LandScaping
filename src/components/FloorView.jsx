@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import floor from "../assets/image/floor plan.jpg"; // update with correct path
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css"; // make sure you import styles
@@ -7,7 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 const FloorPlan = ({ setUnitNo }) => {
     const navigate = useNavigate();
     const { id } = useParams(); // this will capture "4" from /floor/4
-    console.log(id,'-----number')
+    const [isLoading, setIsLoading] = useState(true);
+    console.log(id, '-----number')
     const handleRoute = (unitId) => {
         navigate(`/floor/${id}/unit${unitId}`);
     };
@@ -61,10 +62,18 @@ const FloorPlan = ({ setUnitNo }) => {
     return (
         <div className="relative w-full max-w-6xl mx-auto">
             {/* Floor Plan Image */}
+            {isLoading && (
+                <div className="text-center h-full">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid mx-auto mb-4"></div>
+                    <p className="text-lg text-gray-700 font-medium">Loading, please wait...</p>
+                </div>
+            )}
             <img
                 src={floor}
                 alt="Floor Plan"
                 className="w-full h-auto object-contain rounded"
+                loading="lazy"
+                onLoad={() => setIsLoading(false)}
             />
 
             {/* Overlays */}
